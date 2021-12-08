@@ -26,7 +26,6 @@ body {
 
 .container {
   background-color: #000;
-  height: 85%;
   width: 200px;
   color: #fff;
   padding: 10px;
@@ -73,6 +72,10 @@ body {
   font-size: 12px;
   cursor: pointer;
   margin: 2px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .btn.bg-grey {
