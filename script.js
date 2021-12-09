@@ -1,11 +1,12 @@
 let x = '';
 let y = '';
 let sign = '';
+let result = '';
 
 const buttons = document.querySelector('.buttons');
 const screenValue = document.querySelector('.calc-screen p');
 
-const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ','];
+const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'];
 const signs = ['-', 'X', '+', '÷'];
 
 buttons.addEventListener('click', (e) => {
@@ -19,7 +20,7 @@ buttons.addEventListener('click', (e) => {
     screenValue.textContent = '0';
     return;
   }
-
+  // Detect pushed key type
   screenValue.textContent = '';
   const key = e.target.textContent;
   if (digits.includes(key)) {
@@ -37,12 +38,41 @@ buttons.addEventListener('click', (e) => {
     screenValue.textContent = sign;
   }
 
+  // Sign change
+  if (e.target.textContent === '+/-') {
+    x = x * -1;
+    screenValue.textContent = x;
+  }
+  // Result output
   if (e.target.textContent === '=') {
+    if (x !== '' && sign !== '' && y == '') {
+      y = x;
+    }
     switch (sign) {
       case '+':
-        screenValue.textContent = +x + +y;
+        result = +x + +y;
+        screenValue.textContent = result;
+        break;
+      case '-':
+        result = +x - +y;
+        screenValue.textContent = result;
+        break;
+      case 'X':
+        result = +x * +y;
+        screenValue.textContent = result;
+        break;
+      case '÷':
+        result = +x / +y;
+        if (result == Infinity) {
+          screenValue.textContent = 'Error!!';
+          return;
+        }
+        screenValue.textContent = result;
+        break;
     }
+    x = result;
+    y = '';
+    sign = '';
+    result = '';
   }
-
-  console.log(x, y, sign);
 });
